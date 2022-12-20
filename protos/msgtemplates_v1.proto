@@ -1,0 +1,104 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "pip-services.users.msgtemplates.version1";
+option java_outer_classname = "MessageTemplatesProtoV1";
+option objc_class_prefix = "MSG_TEMPLATES_CMD_V1";
+option go_package = "./protos";
+
+package msgtemplates_v1;
+
+message ErrorDescription {
+  string type = 1;
+  string category = 2;
+  string code = 3;
+  string correlation_id = 4;
+  string status = 5;
+  string message = 6;
+  string cause = 7;
+  string stack_trace = 8;
+  map<string, string> details = 9;
+}
+
+message PagingParams {
+    int64 skip = 1;
+    int32 take = 2;
+    bool total = 3;
+}
+
+message MessageTemplate {
+    string id = 1;
+    string name = 2;
+    string from = 3;
+    map<string, string> subject = 4;
+    map<string, string> text = 5;
+    map<string, string> html = 6;
+    string status = 7;
+}
+
+message MessageTemplatePage {
+    int64 total = 1;
+    repeated MessageTemplate data = 2;
+}
+
+// The templates service definition.
+service MessageTemplates {
+  rpc get_templates (MessageTemplatePageRequest) returns (MessageTemplatePageReply) {}
+  rpc get_template_by_id (MessageTemplateIdRequest) returns (MessageTemplateObjectReply) {}
+  rpc get_template_by_id_or_name (MessageTemplateNameRequest) returns (MessageTemplateObjectReply) {}
+  rpc create_template (MessageTemplateObjectRequest) returns (MessageTemplateObjectReply) {}
+  rpc update_template (MessageTemplateObjectRequest) returns (MessageTemplateObjectReply) {}
+  rpc delete_template_by_id (MessageTemplateIdRequest) returns (MessageTemplateObjectReply) {}
+}
+
+// The request message containing the template page request.
+message MessageTemplatePageRequest {
+  string correlation_id = 1;
+  map<string, string> filter = 2;
+  PagingParams paging = 3;
+}
+
+// The response message containing the template page response
+message MessageTemplatePageReply {
+  ErrorDescription error = 1;
+  MessageTemplatePage page = 2;
+}
+
+// The request message containing the template id request.
+message MessageTemplateIdRequest {
+  string correlation_id = 1;
+  string template_id = 2;
+}
+
+// The request message containing the template name request.
+message MessageTemplateNameRequest {
+  string correlation_id = 1;
+  string name = 2;
+}
+
+// The request message containing the template object request.
+message MessageTemplateObjectRequest {
+  string correlation_id = 1;
+  MessageTemplate template = 2;
+}
+
+// The response message containing the template object response
+message MessageTemplateObjectReply {
+  ErrorDescription error = 1;
+  MessageTemplate template = 2;
+}
+
