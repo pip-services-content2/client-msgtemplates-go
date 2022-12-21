@@ -7,7 +7,6 @@ services:
       context: ..
       dockerfile: docker/Dockerfile.test
     image: ${IMAGE:-pipservices/test}
-    command: ${TEST_CMD:-go test ./test/...}
     links:
       - service
     environment:
@@ -17,7 +16,9 @@ services:
       - HTTP_PORT=8080
 
   service:
-    image: pipservices/service-msgtemplates-node:latest
+    image: pipservices/service-accounts-node:latest
     environment:
       - HTTP_ENABLED=true
       - GRPC_ENABLED=true
+      - GRPC_PORT=8090
+      - HTTP_PORT=8080

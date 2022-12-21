@@ -12,8 +12,7 @@ $container = $component.name
 # Remove build files
 if (Test-Path "$PSScriptRoot/protos") {
     Remove-Item -Recurse -Force -Path "$PSScriptRoot/protos/*.go"
-}
-else {
+} else {
     New-Item -ItemType Directory -Force -Path "$PSScriptRoot/protos"
 }
 
@@ -22,7 +21,7 @@ docker build -f "$PSScriptRoot/docker/Dockerfile.proto" -t $protoImage .
 
 # Create and copy compiled files, then destroy the container
 docker create --name $container $protoImage
-docker cp "$($container):/app/protos" "$PSScriptRoot/"
+docker cp "$($container):/go/eic/protos" "$PSScriptRoot/"
 docker rm $container
 
 # Verify that protos folder was indeed created after generating proto files
