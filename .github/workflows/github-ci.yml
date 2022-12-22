@@ -8,6 +8,7 @@ on:
     paths:
     - '**'
     - '!README.md'
+  workflow_dispatch:
 
 jobs:
   # Setup job
