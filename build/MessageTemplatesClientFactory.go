@@ -16,11 +16,13 @@ func NewMessageTemplatesClientFactory() *MessageTemplatesClientFactory {
 	}
 
 	nullClientDescriptor := cref.NewDescriptor("service-msgtemplates", "client", "null", "*", "1.0")
+	mockClientDescriptor := cref.NewDescriptor("service-msgtemplates", "client", "mock", "*", "1.0")
 	cmdHttpClientDescriptor := cref.NewDescriptor("service-msgtemplates", "client", "commandable-http", "*", "1.0")
 	grpcClientDescriptor := cref.NewDescriptor("service-msgtemplates", "client", "grpc", "*", "1.0")
 	cmdGrpcClientDescriptor := cref.NewDescriptor("service-msgtemplates", "client", "commandable-grpc", "*", "1.0")
 
 	c.RegisterType(nullClientDescriptor, clients1.NewMessageTemplatesNullClientV1)
+	c.RegisterType(mockClientDescriptor, clients1.NewMessageTemplatesMockClientV1)
 	c.RegisterType(cmdHttpClientDescriptor, clients1.NewMessageTemplatesCommandableHttpClientV1)
 	c.RegisterType(grpcClientDescriptor, clients1.NewMessageTemplatesGrpcClientV1)
 	c.RegisterType(cmdGrpcClientDescriptor, clients1.NewMessageTemplatesCommandableGrpcClientV1)
