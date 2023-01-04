@@ -169,7 +169,10 @@ func (c *MessageTemplatesMockClientV1) DeleteTemplateById(ctx context.Context, c
 	}
 
 	var item = c.templates[index]
-	c.templates = append(c.templates[:index], c.templates[index+1:]...)
-
+	if index < len(c.templates) {
+		c.templates = append(c.templates[:index], c.templates[index+1:]...)
+	} else {
+		c.templates = c.templates[:index]
+	}
 	return item, nil
 }
