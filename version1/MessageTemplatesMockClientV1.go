@@ -64,8 +64,8 @@ func (c *MessageTemplatesMockClientV1) composeFilter(filter *data.FilterParams) 
 
 	search, searchOk := filter.GetAsNullableString("search")
 	id, idOk := filter.GetAsNullableString("id")
-	status, statusOk := filter.GetAsNullableString("name")
-	name, nameOk := filter.GetAsNullableString("login")
+	status, statusOk := filter.GetAsNullableString("status")
+	name, nameOk := filter.GetAsNullableString("name")
 
 	return func(item *MessageTemplateV1) bool {
 		if idOk && item.Id != id {
